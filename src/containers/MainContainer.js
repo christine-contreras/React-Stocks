@@ -4,6 +4,29 @@ import PortfolioContainer from './PortfolioContainer'
 import SearchBar from '../components/SearchBar'
 
 class MainContainer extends Component {
+  state = {
+    stocks: [],
+    portfolioStocks: []
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:3000/stocks')
+    .then(response => response.json())
+    .then(json => {
+      this.setState({stocks: json})
+    })
+  }
+
+  handleAddStockToPortfolio = (selectedStock) => {
+    const newStocks = this.state.stocks.filter(stock => stock !== selectedStock)
+
+    this.setState(previousState => {
+      return {
+        stocks: newStocks,
+        portfolioStocks: [...previousState.portfolioStocks, selectedStock]
+      }
+    })
+  }
 
   render() {
     return (
@@ -13,12 +36,17 @@ class MainContainer extends Component {
           <div className="row">
             <div className="col-8">
 
-              <StockContainer/>
+              <StockContainer
+              stocks={this.state.stocks}
+              handleAddStockToPortfolio={this.handleAddStockToPortfolio}
+              />
 
             </div>
             <div className="col-4">
 
-              <PortfolioContainer/>
+              <PortfolioContainer
+              portfolioStocks={this.state.portfolioStocks}
+              />
 
             </div>
           </div>
