@@ -7,7 +7,8 @@ class MainContainer extends Component {
   state = {
     stocks: [],
     portfolioStocks: [],
-    sort: 'None'
+    sort: 'None',
+    filter: 'All'
   }
 
   componentDidMount() {
@@ -41,14 +42,18 @@ class MainContainer extends Component {
     })
   }
 
-  handleSort = (event) => {
+  handleFormChange = (event) => {
     this.setState({
-      sort: event.target.value
+      [event.target.name]: event.target.value
     })
   }
 
   displayStocks = () => {
     let filteredStocks = [...this.state.stocks]
+
+    if(this.state.filter !== 'All') {
+      filteredStocks = filteredStocks.filter(stock => stock.type === this.state.filter)
+    }
 
     switch(this.state.sort){
       case 'Alphabetically':
@@ -68,7 +73,8 @@ class MainContainer extends Component {
       <div>
         <SearchBar
         sort={this.state.sort}
-        handleSort={this.handleSort}/>
+        handleFormChange={this.handleFormChange}
+        />
 
           <div className="row">
             <div className="col-8">
