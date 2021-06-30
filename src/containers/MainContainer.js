@@ -28,6 +28,18 @@ class MainContainer extends Component {
     })
   }
 
+
+  handleSellStock = (selectedStock) => {
+    const newPortfolioStocks = this.state.portfolioStocks.filter(stock => stock !== selectedStock)
+
+    this.setState(previousState => {
+      return {
+        stocks: [...previousState.stocks, selectedStock],
+        portfolioStocks: newPortfolioStocks
+      }
+    })
+  }
+
   render() {
     return (
       <div>
@@ -38,7 +50,7 @@ class MainContainer extends Component {
 
               <StockContainer
               stocks={this.state.stocks}
-              handleAddStockToPortfolio={this.handleAddStockToPortfolio}
+              handleStock={this.handleAddStockToPortfolio}
               />
 
             </div>
@@ -46,6 +58,7 @@ class MainContainer extends Component {
 
               <PortfolioContainer
               portfolioStocks={this.state.portfolioStocks}
+              handleStock={this.handleSellStock}
               />
 
             </div>

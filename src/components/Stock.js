@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Stock = (props) => (
-  <div onClick={() => props.handleAddStockToPortfolio(props.stock)}>
+  <div onClick={() => props.handleStock(props.stock)}>
 
     <div className="card">
       <div className="card-body">
